@@ -6,7 +6,9 @@ import com.fhsa.stocks.dto.response.StockResponse;
 import com.fhsa.stocks.service.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -17,6 +19,11 @@ public class StockController implements StockControllerApi {
 
     public StockController(StockService service) {
         this.service = service;
+    }
+
+    @Override
+    public void includeManyStocks(MultipartFile file) throws IOException {
+        service.includeManyStocks(file);
     }
 
     @Override
