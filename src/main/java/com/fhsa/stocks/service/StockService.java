@@ -13,8 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import java.awt.print.Pageable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +23,8 @@ import java.util.List;
 @Slf4j
 @Service
 public class StockService {
+
+    private static final Integer DEFAULT_FIRST_PAGE_NUMBER = 0;
 
     private StockRepository repository;
     private StockFactory factory;
@@ -83,10 +83,10 @@ public class StockService {
         processFile(inputStream);
     }
 
-    public List<StockEntity> aa() {
-        Sort sort = Sort.by(Sort.Direction.DESC, "theoreticalAmount");
+    public List<StockEntity> getAveragePriceFromTopStocks(Integer limit, String sortedDescBy) {
+        Sort sort = Sort.by(Sort.Direction.DESC, sortedDescBy);
 
-        PageRequest pageable = PageRequest.of(0,10, sort);
+        PageRequest pageable = PageRequest.of(DEFAULT_FIRST_PAGE_NUMBER,limit, sort);
 
         return repository.findAll(pageable).getContent();
     }
