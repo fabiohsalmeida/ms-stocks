@@ -3,6 +3,7 @@ package com.fhsa.stocks.controller.v1.impl;
 import com.fhsa.stocks.controller.v1.StockControllerApi;
 import com.fhsa.stocks.dto.Error;
 import com.fhsa.stocks.dto.request.StockRequest;
+import com.fhsa.stocks.dto.response.StockAverageResponse;
 import com.fhsa.stocks.dto.response.StockResponse;
 import com.fhsa.stocks.entity.StockEntity;
 import com.fhsa.stocks.service.StockService;
@@ -63,7 +64,7 @@ public class StockController implements StockControllerApi {
     }
 
     @Override
-    public List<StockEntity> getAveragePriceFromTopStocks(Integer limit, String sortedDescBy) {
+    public List<StockAverageResponse> getAveragePriceFromTopStocks(Integer limit, String sortedDescBy) {
         return service.getAveragePriceFromTopStocks(limit, sortedDescBy);
     }
 

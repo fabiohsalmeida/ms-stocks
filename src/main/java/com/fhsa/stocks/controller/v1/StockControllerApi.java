@@ -1,10 +1,12 @@
 package com.fhsa.stocks.controller.v1;
 
 import com.fhsa.stocks.dto.request.StockRequest;
+import com.fhsa.stocks.dto.response.StockAverageResponse;
 import com.fhsa.stocks.dto.response.StockResponse;
 import com.fhsa.stocks.entity.StockEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -54,7 +56,7 @@ public interface StockControllerApi {
     @GetMapping("/top")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Get top 10")
-    List<StockEntity> getAveragePriceFromTopStocks(
+    List<StockAverageResponse> getAveragePriceFromTopStocks(
             @RequestParam(required = false, defaultValue = "10") Integer limit,
             @RequestParam(required = false, defaultValue = "theoreticalAmount") String sortedDescBy);
 }
