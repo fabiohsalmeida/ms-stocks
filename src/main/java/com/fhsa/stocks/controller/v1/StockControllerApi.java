@@ -2,6 +2,7 @@ package com.fhsa.stocks.controller.v1;
 
 import com.fhsa.stocks.dto.request.StockRequest;
 import com.fhsa.stocks.dto.response.StockResponse;
+import com.fhsa.stocks.entity.StockEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -48,4 +49,9 @@ public interface StockControllerApi {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation("Remove stock by code")
     void removeStockByCode(@PathVariable String stockId);
+
+    @GetMapping("/top")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation("Get top 10")
+    List<StockEntity> aa();
 }

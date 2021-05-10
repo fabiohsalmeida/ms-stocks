@@ -4,6 +4,7 @@ import com.fhsa.stocks.controller.v1.StockControllerApi;
 import com.fhsa.stocks.dto.Error;
 import com.fhsa.stocks.dto.request.StockRequest;
 import com.fhsa.stocks.dto.response.StockResponse;
+import com.fhsa.stocks.entity.StockEntity;
 import com.fhsa.stocks.service.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -60,6 +61,11 @@ public class StockController implements StockControllerApi {
     @Override
     public void removeStockByCode(String stockId) {
         service.removeStock(stockId);
+    }
+
+    @Override
+    public List<StockEntity> aa() {
+        return service.aa();
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

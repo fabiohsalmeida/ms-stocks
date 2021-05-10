@@ -8,10 +8,13 @@ import com.fhsa.stocks.event.producer.StockFileProducer;
 import com.fhsa.stocks.factory.StockFactory;
 import com.fhsa.stocks.repository.StockRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.awt.print.Pageable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -78,6 +81,14 @@ public class StockService {
         InputStream inputStream = file.getInputStream();
 
         processFile(inputStream);
+    }
+
+    public List<StockEntity> aa() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "theoreticalAmount");
+
+        PageRequest pageable = PageRequest.of(0,10, sort);
+
+        return repository.findAll(pageable).getContent();
     }
 
     private boolean isValidNameAndCode(String name, String code) {
