@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueStockName {
 
-    String message() default "Already exists a stock registered with this name";
+    String message() default "Non-unique stock name";
 
     Class<?>[] groups() default {};
 

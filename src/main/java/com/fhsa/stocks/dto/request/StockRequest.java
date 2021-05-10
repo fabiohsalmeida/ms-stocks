@@ -1,5 +1,6 @@
 package com.fhsa.stocks.dto.request;
 
+import com.fhsa.stocks.annotation.UniqueStockCode;
 import com.fhsa.stocks.annotation.UniqueStockName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 public class StockRequest {
 
     @NotBlank
+    @UniqueStockCode
     @ApiModelProperty("Stock's code")
     private String code;
     @NotBlank
