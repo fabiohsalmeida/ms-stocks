@@ -1,28 +1,23 @@
 package com.fhsa.stocks.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fhsa.stocks.dto.request.StockRequest;
 import com.fhsa.stocks.dto.response.StockResponse;
 import com.fhsa.stocks.entity.StockEntity;
+import com.fhsa.stocks.event.producer.StockFileProducer;
 import com.fhsa.stocks.factory.StockFactory;
 import com.fhsa.stocks.repository.StockRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -30,13 +25,16 @@ public class StockService {
 
     private StockRepository repository;
     private StockFactory factory;
+    private StockFileProducer producer;
     private ObjectReader stockFileObjectReader;
 
     public StockService(StockRepository repository,
                         StockFactory factory,
+                        StockFileProducer producer,
                         ObjectReader stockFileObjectReader) {
         this.repository = repository;
         this.factory = factory;
+        this.producer = producer;
         this.stockFileObjectReader = stockFileObjectReader;
     }
 
@@ -46,6 +44,12 @@ public class StockService {
         stockEntity = repository.save(stockEntity);
 
         return factory.createResponseFromEntity(stockEntity);
+    }
+
+    public void includeStockFromFile(StockRequest stockRequest) {
+        if (isValidNameAndCode(stockRequest.getName(), stockRequest.getCode())) {
+            this.includeStock(stockRequest);
+        }
     }
 
     public List<StockResponse> listStocks() {
@@ -76,6 +80,10 @@ public class StockService {
         processFile(inputStream);
     }
 
+    private boolean isValidNameAndCode(String name, String code) {
+        return repository.findByName(name) == null && repository.findByCode(code) == null;
+    }
+
     private void processFile(InputStream inputStream) {
         InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
 
@@ -83,14 +91,7 @@ public class StockService {
     }
 
     private void processFileLine(String line) {
-        ObjectMapper objectMapper = new ObjectMapper();
 
-        try {
-            StockRequest request = stockFileObjectReader.readValue(line);
-            log.info(line);
-            log.info(objectMapper.writeValueAsString(request));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        producer.send(line);
     }
 }

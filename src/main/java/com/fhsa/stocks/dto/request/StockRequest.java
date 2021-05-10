@@ -1,25 +1,29 @@
 package com.fhsa.stocks.dto.request;
 
+import com.fhsa.stocks.annotation.UniqueStockName;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class StockRequest {
 
+    @NotBlank
     @ApiModelProperty("Stock's code")
     private String code;
+    @NotBlank
+    @UniqueStockName
     @ApiModelProperty("Stock's name")
     private String name;
+    @NotNull
     @ApiModelProperty("Theoretical amount")
     private Long theoreticalAmount;
+    @NotNull
     @ApiModelProperty("Participation percentage")
     private BigDecimal participation;
 }

@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface StockControllerApi {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation("Include a new stock manually")
-    StockResponse includeStock(@RequestBody @Validated StockRequest stockRequest);
+    StockResponse includeStock(@RequestBody @Valid StockRequest stockRequest);
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
