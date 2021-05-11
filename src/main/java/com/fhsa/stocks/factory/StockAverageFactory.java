@@ -8,18 +8,44 @@ import org.springframework.stereotype.Component;
 @Component
 public class StockAverageFactory {
 
-    public StockAverageResponse createStockAverageFromEntity(StockEntity stockResponse,
-                                                               YahooFinanceGetQuoteResult quoteResult) {
-        StockAverageResponse stockAverageResponse = new StockAverageResponse();
+    private static final String ERROR_SYMBOL_NOT_FOUND = "Symbol not found by auto complete operation.";
+    private static final String ERROR_GET_QUOTE_NOT_FOUND = "Quote not found by get quote not found operation.";
 
-        stockAverageResponse.setId(stockResponse.getId());
-        stockAverageResponse.setCode(stockResponse.getCode());
-        stockAverageResponse.setName(stockResponse.getName());
-        stockAverageResponse.setTheoreticalAmount(stockResponse.getTheoreticalAmount());
-        stockAverageResponse.setParticipation(stockResponse.getParticipation());
+    public StockAverageResponse createStockAverageFromEntity(StockEntity stockEntity,
+                                                               YahooFinanceGetQuoteResult quoteResult) {
+        StockAverageResponse stockAverageResponse = this.createTemplateStockAverageResponse(stockEntity);
+
         stockAverageResponse.setCurrency(quoteResult.getCurrency());
         stockAverageResponse.setFiftyDayAverage(quoteResult.getFiftyDayAverage());
         stockAverageResponse.setTwoHundredDayAverage(quoteResult.getTwoHundredDayAverage());
+
+        return stockAverageResponse;
+    }
+
+    public StockAverageResponse createStockAverageFromEntityNonSymbol(StockEntity entity) {
+        StockAverageResponse stockAverageResponse = this.createTemplateStockAverageResponse(entity);
+
+        stockAverageResponse.setError(ERROR_SYMBOL_NOT_FOUND);
+
+        return stockAverageResponse;
+    }
+
+    private StockAverageResponse createTemplateStockAverageResponse(StockEntity entity) {
+        StockAverageResponse stockAverageResponse = new StockAverageResponse();
+
+        stockAverageResponse.setId(entity.getId());
+        stockAverageResponse.setCode(entity.getCode());
+        stockAverageResponse.setName(entity.getName());
+        stockAverageResponse.setTheoreticalAmount(entity.getTheoreticalAmount());
+        stockAverageResponse.setParticipation(entity.getParticipation());
+
+        return stockAverageResponse;
+    }
+
+    public StockAverageResponse createStockAverageFromEntityNonPrices(StockEntity entity) {
+        StockAverageResponse stockAverageResponse = this.createTemplateStockAverageResponse(entity);
+
+        stockAverageResponse.setError(ERROR_GET_QUOTE_NOT_FOUND);
 
         return stockAverageResponse;
     }

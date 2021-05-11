@@ -11,6 +11,7 @@ import com.fhsa.stocks.factory.StockAverageFactory;
 import com.fhsa.stocks.factory.StockFactory;
 import com.fhsa.stocks.repository.StockRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -108,9 +109,17 @@ public class StockService {
     private StockAverageResponse mapStockAverage(StockEntity entity) {
         String symbol = yahooFinanceService.getSymbol(entity.getCode());
 
+        return StringUtils.isEmpty(symbol)
+                ? averageFactory.createStockAverageFromEntityNonSymbol(entity)
+                : getAveragePrices(entity, symbol);
+    }
+
+    private StockAverageResponse getAveragePrices(StockEntity entity, String symbol) {
         YahooFinanceGetQuoteResult quoteResult = yahooFinanceService.getAveragePrices(symbol);
 
-        return quoteResult == null ? null : averageFactory.createStockAverageFromEntity(entity, quoteResult);
+        return quoteResult == null
+                ? averageFactory.createStockAverageFromEntityNonPrices(entity)
+                : averageFactory.createStockAverageFromEntity(entity, quoteResult);
     }
 
     private boolean isValidNameAndCode(String name, String code) {

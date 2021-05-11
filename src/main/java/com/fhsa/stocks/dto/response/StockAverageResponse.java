@@ -15,4 +15,5 @@ public class StockAverageResponse extends StockResponse {
     private String currency;
     private BigDecimal fiftyDayAverage;
     private BigDecimal twoHundredDayAverage;
+    private String error;
 }

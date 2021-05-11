@@ -1,6 +1,7 @@
 package com.fhsa.stocks.service;
 
 import com.fhsa.stocks.client.YahooFinanceClient;
+import com.fhsa.stocks.client.dto.YahooFinanceAutoCompleteQuote;
 import com.fhsa.stocks.client.dto.response.YahooFinanceAutoCompleteResponse;
 import com.fhsa.stocks.client.dto.YahooFinanceGetQuoteResult;
 import com.fhsa.stocks.client.dto.response.YahooFinanceGetQuotesResponse;
@@ -26,7 +27,7 @@ public class YahooFinanceService {
         YahooFinanceAutoCompleteResponse autoCompleteResponse = client.consultAutoComplete(
                 apiKey, apiHost, Boolean.TRUE, defaultRegion, query);
 
-        return autoCompleteResponse.getQuotes().stream().findFirst().get().getSymbol();
+        return autoCompleteResponse.getQuotes().stream().findFirst().orElse(new YahooFinanceAutoCompleteQuote()).getSymbol();
     }
 
     public YahooFinanceGetQuoteResult getAveragePrices(String... symbol) {
