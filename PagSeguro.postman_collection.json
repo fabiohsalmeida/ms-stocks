@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "f1eac9f6-2a2e-4b74-b734-6e3f893e227a",
+		"name": "PagSeguro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/v1/stock",
+			"item": [
+				{
+					"name": "Include new stock",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"ABEV3\",\r\n    \"name\": \"AMBEV S/A ON\",\r\n    \"theoreticalAmount\": 4355174839,\r\n    \"participation\": 3.096\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/stock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"stock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Include a stock file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/F:/Development/git/code interviews/pagseguro/para_test _Backend _Java_Kotlin.txt"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/F:/Development/git/code interviews/pagseguro/a.txt",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/stock/file",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"stock",
+								"file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List stocks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/stock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"stock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List top stocks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/stock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"stock"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get stock by code",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/stock/code/ABEV3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"stock",
+								"code",
+								"ABEV3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get stock by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/stock/name?stockName=AMBEV S/A ON",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"stock",
+								"name"
+							],
+							"query": [
+								{
+									"key": "stockName",
+									"value": "AMBEV S/A ON"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete stock",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/stock/609739068976a7053388cf8a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"stock",
+								"609739068976a7053388cf8a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Yahoo Finance",
+			"item": [
+				{
+					"name": "Auto Complete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "Get Quotes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
