@@ -53,7 +53,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/F:/Development/git/code interviews/pagseguro/a.txt",
+									"src": [],
 									"disabled": true
 								}
 							]
@@ -100,7 +100,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/v1/stock",
+							"raw": "http://localhost:8080/v1/stock/top",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -108,7 +108,20 @@
 							"port": "8080",
 							"path": [
 								"v1",
-								"stock"
+								"stock",
+								"top"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "sortedDescBy",
+									"value": "theoreticalAmount",
+									"disabled": true
+								}
 							]
 						}
 					},
