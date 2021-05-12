@@ -3,13 +3,9 @@ package com.fhsa.stocks.controller.v1;
 import com.fhsa.stocks.dto.request.StockRequest;
 import com.fhsa.stocks.dto.response.StockAverageResponse;
 import com.fhsa.stocks.dto.response.StockResponse;
-import com.fhsa.stocks.entity.StockEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.cloud.openfeign.SpringQueryMap;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

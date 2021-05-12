@@ -12,8 +12,8 @@ public class StockAverageFactory {
     private static final String ERROR_GET_QUOTE_NOT_FOUND = "Quote not found by get quote not found operation.";
 
     public StockAverageResponse createStockAverageFromEntity(StockEntity stockEntity,
-                                                               YahooFinanceGetQuoteResult quoteResult) {
-        StockAverageResponse stockAverageResponse = this.createTemplateStockAverageResponse(stockEntity);
+                                                             YahooFinanceGetQuoteResult quoteResult) {
+        var stockAverageResponse = this.createTemplateStockAverageResponse(stockEntity);
 
         stockAverageResponse.setCurrency(quoteResult.getCurrency());
         stockAverageResponse.setFiftyDayAverage(quoteResult.getFiftyDayAverage());
@@ -23,29 +23,29 @@ public class StockAverageFactory {
     }
 
     public StockAverageResponse createStockAverageFromEntityNonSymbol(StockEntity entity) {
-        StockAverageResponse stockAverageResponse = this.createTemplateStockAverageResponse(entity);
+        var stockAverageResponse = this.createTemplateStockAverageResponse(entity);
 
         stockAverageResponse.setError(ERROR_SYMBOL_NOT_FOUND);
 
         return stockAverageResponse;
     }
 
+    public StockAverageResponse createStockAverageFromEntityNonPrices(StockEntity entity) {
+        var stockAverageResponse = this.createTemplateStockAverageResponse(entity);
+
+        stockAverageResponse.setError(ERROR_GET_QUOTE_NOT_FOUND);
+
+        return stockAverageResponse;
+    }
+
     private StockAverageResponse createTemplateStockAverageResponse(StockEntity entity) {
-        StockAverageResponse stockAverageResponse = new StockAverageResponse();
+        var stockAverageResponse = new StockAverageResponse();
 
         stockAverageResponse.setId(entity.getId());
         stockAverageResponse.setCode(entity.getCode());
         stockAverageResponse.setName(entity.getName());
         stockAverageResponse.setTheoreticalAmount(entity.getTheoreticalAmount());
         stockAverageResponse.setParticipation(entity.getParticipation());
-
-        return stockAverageResponse;
-    }
-
-    public StockAverageResponse createStockAverageFromEntityNonPrices(StockEntity entity) {
-        StockAverageResponse stockAverageResponse = this.createTemplateStockAverageResponse(entity);
-
-        stockAverageResponse.setError(ERROR_GET_QUOTE_NOT_FOUND);
 
         return stockAverageResponse;
     }

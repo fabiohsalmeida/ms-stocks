@@ -1,6 +1,5 @@
 package com.fhsa.stocks.service;
 
-import com.fasterxml.jackson.databind.ObjectReader;
 import com.fhsa.stocks.client.dto.YahooFinanceGetQuoteResult;
 import com.fhsa.stocks.dto.request.StockRequest;
 import com.fhsa.stocks.dto.response.StockAverageResponse;
@@ -34,26 +33,23 @@ public class StockService {
     private StockRepository repository;
     private StockFactory factory;
     private StockFileProducer producer;
-    private ObjectReader stockFileObjectReader;
     private YahooFinanceService yahooFinanceService;
     private StockAverageFactory averageFactory;
 
     public StockService(StockRepository repository,
                         StockFactory factory,
                         StockFileProducer producer,
-                        ObjectReader stockFileObjectReader,
                         YahooFinanceService yahooFinanceService,
                         StockAverageFactory averageFactory) {
         this.repository = repository;
         this.factory = factory;
         this.producer = producer;
-        this.stockFileObjectReader = stockFileObjectReader;
         this.yahooFinanceService = yahooFinanceService;
         this.averageFactory = averageFactory;
     }
 
     public StockResponse includeStock(StockRequest stockRequest) {
-        StockEntity stockEntity = factory.createEntityFromRequest(stockRequest);
+        var stockEntity = factory.createEntityFromRequest(stockRequest);
 
         stockEntity = repository.save(stockEntity);
 
@@ -73,13 +69,13 @@ public class StockService {
     }
 
     public StockResponse getStockByCode(String stockCode) {
-        StockEntity stockEntity = repository.findByCode(stockCode);
+        var stockEntity = repository.findByCode(stockCode);
 
         return factory.createResponseFromEntity(stockEntity);
     }
 
     public StockResponse getStockByName(String stockName) {
-        StockEntity stockEntity = repository.findByName(stockName);
+        var stockEntity = repository.findByName(stockName);
 
         return factory.createResponseFromEntity(stockEntity);
     }
@@ -89,15 +85,15 @@ public class StockService {
     }
 
     public void includeManyStocks(MultipartFile file) throws IOException {
-        InputStream inputStream = file.getInputStream();
+        var inputStream = file.getInputStream();
 
         processFile(inputStream);
     }
 
     public List<StockAverageResponse> getAveragePriceFromTopStocks(Integer limit, String sortedDescBy) {
-        Sort sort = Sort.by(Sort.Direction.DESC, sortedDescBy);
+        var sort = Sort.by(Sort.Direction.DESC, sortedDescBy);
 
-        PageRequest pageable = PageRequest.of(DEFAULT_FIRST_PAGE_NUMBER,limit, sort);
+        var pageable = PageRequest.of(DEFAULT_FIRST_PAGE_NUMBER,limit, sort);
 
         List<StockEntity> stockEntityList = repository.findAll(pageable).getContent();
 
@@ -127,7 +123,7 @@ public class StockService {
     }
 
     private void processFile(InputStream inputStream) {
-        InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+        var streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
 
         new BufferedReader(streamReader).lines().forEach(this::processFileLine);
     }

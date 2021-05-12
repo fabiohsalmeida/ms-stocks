@@ -2,8 +2,8 @@ package com.fhsa.stocks.service;
 
 import com.fhsa.stocks.client.YahooFinanceClient;
 import com.fhsa.stocks.client.dto.YahooFinanceAutoCompleteQuote;
-import com.fhsa.stocks.client.dto.response.YahooFinanceAutoCompleteResponse;
 import com.fhsa.stocks.client.dto.YahooFinanceGetQuoteResult;
+import com.fhsa.stocks.client.dto.response.YahooFinanceAutoCompleteResponse;
 import com.fhsa.stocks.client.dto.response.YahooFinanceGetQuotesResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,13 +27,15 @@ public class YahooFinanceService {
         YahooFinanceAutoCompleteResponse autoCompleteResponse = client.consultAutoComplete(
                 apiKey, apiHost, Boolean.TRUE, defaultRegion, query);
 
-        return autoCompleteResponse.getQuotes().stream().findFirst().orElse(new YahooFinanceAutoCompleteQuote()).getSymbol();
+        return autoCompleteResponse.getQuotes().stream().findFirst().orElse(
+                new YahooFinanceAutoCompleteQuote()).getSymbol();
     }
 
     public YahooFinanceGetQuoteResult getAveragePrices(String... symbol) {
-        YahooFinanceGetQuotesResponse quotesResponse = client.consultQuotes(apiKey, apiHost, true,
-                defaultRegion, symbol);
+        YahooFinanceGetQuotesResponse quotesResponse = client.consultQuotes(
+                apiKey, apiHost, Boolean.TRUE, defaultRegion, symbol);
 
-        return quotesResponse.getQuoteResponse().getResult().stream().findFirst().orElse(null);
+        return quotesResponse.getQuoteResponse().getResult().stream()
+                .findFirst().orElse(null);
     }
 }

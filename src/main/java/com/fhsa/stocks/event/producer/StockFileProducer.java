@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StockFileProducer {
 
-    private static final String topic = "stock_file_process";
+    private static final String TOPIC = "stock_file_process";
 
     private final KafkaTemplate<String, String> template;
 
@@ -15,6 +15,6 @@ public class StockFileProducer {
     }
 
     public void send(String line) {
-        template.send(topic, line);
+        template.send(TOPIC, line);
     }
 }

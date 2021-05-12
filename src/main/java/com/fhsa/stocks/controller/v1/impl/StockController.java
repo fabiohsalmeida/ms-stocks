@@ -5,7 +5,6 @@ import com.fhsa.stocks.dto.Error;
 import com.fhsa.stocks.dto.request.StockRequest;
 import com.fhsa.stocks.dto.response.StockAverageResponse;
 import com.fhsa.stocks.dto.response.StockResponse;
-import com.fhsa.stocks.entity.StockEntity;
 import com.fhsa.stocks.service.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -42,7 +41,6 @@ public class StockController implements StockControllerApi {
         return service.includeStock(stockRequest);
     }
 
-    // TODO Page
     @Override
     public List<StockResponse> listStocks() {
         return service.listStocks();
@@ -73,7 +71,7 @@ public class StockController implements StockControllerApi {
     public Error handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().stream().forEach((error) -> {
+        ex.getBindingResult().getAllErrors().stream().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);

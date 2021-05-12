@@ -1,7 +1,5 @@
 package com.fhsa.stocks.config;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
@@ -14,7 +12,7 @@ public class StockFileObjectMapperConfig {
 
     @Bean
     public ObjectReader createDefaultStockFileMapper() {
-        CsvMapper mapper = new CsvMapper();
+        var mapper = new CsvMapper();
 
         return mapper.readerFor(StockRequest.class).with(getSchema(mapper));
     }

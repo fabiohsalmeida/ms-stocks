@@ -1,6 +1,5 @@
 package com.fhsa.stocks.dto.response;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
